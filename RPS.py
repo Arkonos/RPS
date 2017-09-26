@@ -6,8 +6,48 @@ Simple Scissors, Rock, Paper game for command line
 
 import random
 import sys
+import tkinter as tk
 
 
+#  from tkinter import *
+from tkinter import ttk
+
+
+def set_player_choice(selection):
+    choice_user = selection
+    print(choice_user)
+
+
+root = tk.Tk()
+root.title('RPS')
+
+mainframe = tk.ttk.Frame(root, padding="3 3 12 12")
+mainframe.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.E, tk.S))
+mainframe.columnconfigure(0, weight=1)
+mainframe.rowconfigure(0, weight=1)
+
+ttk.Label(mainframe, textvariable='test').\
+        grid(column=2, row=2, sticky=(tk.W, tk.E))
+ttk.Button(mainframe, text='Rock',
+           command=lambda: set_player_choice('Rock'))\
+                .grid(column=1, row=3, sticky=tk.W)
+ttk.Button(mainframe, text='Paper',
+           command=lambda: set_player_choice('Paper'))\
+                .grid(column=2, row=3, sticky=tk.W)
+ttk.Button(mainframe, text='Scissor',
+           command=lambda: set_player_choice('Scissor'))\
+                .grid(column=3, row=3, sticky=tk.W)
+
+for child in mainframe.winfo_children():
+    child.grid_configure(padx=5, pady=5)
+'''
+root.bind('1', set_player_choice('Rock'))
+root.bind('2', set_player_choice('Paper'))
+root.bind('3', set_player_choice('Scissors'))
+'''
+root.mainloop()
+
+"""
 def sanitise_user_choice(choice_user):
     ''' Normalise user input to valid word from OPTIONS '''
 
@@ -111,3 +151,4 @@ OPTIONS = {
 }
 
 game()
+"""
