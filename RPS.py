@@ -5,6 +5,7 @@ Simple Scissors, Rock, Paper game for command line
 """
 
 import random
+import sys
 
 
 def sanitise_user_choice(choice_user):
@@ -12,11 +13,14 @@ def sanitise_user_choice(choice_user):
 
     try:
         choice_user = int(choice_user)
+        if choice_user == 4:
+            sys.exit('Goodbye!')
         choice_user = OPTIONS[choice_user]
         return choice_user
     except AttributeError:
         str.capitalize(choice_user)
-# == 'Scissors' or choice_user == 'Rock' or choice_user == 'Paper'
+        if choice_user == 'Quit':
+            sys.exit('Goodbye')
         if choice_user in OPTIONS.values():
             return choice_user
         else:
@@ -82,25 +86,15 @@ def print_result(outcome, count_draw, count_player_win, count_computer_win):
     print('Loss:', count_computer_win)
 
 
-def ask_for_another_round():
-    ''' Aks user if he want's to play for another round.
-
-        Should be included in the choice_user query '''
-    another_round = str.capitalize(input('Another Round? (y/n)'))
-    if another_round == 'N':
-        return False
-
-
 def game():
     ''' Runs the game. '''
 
-    another_round = True
     count_draw = 0
     count_player_win = 0
     count_computer_win = 0
     while True:
         choice_user = input(
-                'Please type in (1) Scissors, (2) Rock or (3) Paper. ')
+               'Please enter (1) Scissors, (2) Rock, (3) Paper or (4) quit. ')
         choice_user = sanitise_user_choice(choice_user)
         choice_computer = random.choice(list(OPTIONS.values()))
         outcome = evaluate_matchup(choice_user, choice_computer)
@@ -108,9 +102,6 @@ def game():
             set_score(
                     count_draw, count_player_win, count_computer_win, outcome)
         print_result(outcome, count_draw, count_player_win, count_computer_win)
-        another_round = ask_for_another_round()
-        if not another_round:
-            break
 
 
 OPTIONS = {
